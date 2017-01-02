@@ -273,7 +273,7 @@ public class FibonacciHeap
     	private int key;
     	private int rank;
     	private boolean mark = false;
-    	private List<HeapNode> childs;
+    	private List<HeapNode> childs = new ArrayList<HeapNode>();
     	private HeapNode next;
     	private HeapNode prev;
     	private HeapNode parent;
