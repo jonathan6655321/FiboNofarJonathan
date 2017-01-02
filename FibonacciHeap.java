@@ -25,7 +25,7 @@ public class FibonacciHeap
     */
     public boolean empty()
     {
-    	if (this.roots == null || this.roots.size() == 0) {
+    	if (this.roots.size() == 0) {
     		return true;
     	}
     	else {
