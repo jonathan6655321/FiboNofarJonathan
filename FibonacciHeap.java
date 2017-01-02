@@ -107,7 +107,7 @@ public class FibonacciHeap
     		  }
     		  this.marks = this.marks + heap2.marks;
     		  this.size = this.size + heap2.size;
-    		  this.roots.addAll(heap2.roots);
+    		  this.roots.addAll(heap2.roots); // TODO do in O(1) by switching to linked list
     	  }
     	  // if both heaps are empty or if heap2 is empty do nothing!
     }
@@ -129,7 +129,7 @@ public class FibonacciHeap
     * Return a counters array, where the value of the i-th entry is the number of trees of order i in the heap. 
     * 
     */
-    public int[] countersRep()
+    public int[] countersRep() // TODO maybe in O(1) by implementing in array with doubles
     {
 	int[] arr = new int[0];
 	for (int i = 0;i<this.roots.size();i++) { // go on all the roots of the heap
@@ -173,6 +173,7 @@ public class FibonacciHeap
     public void delete(HeapNode x) 
     {    
     	this.decreaseKey(x, Integer.MIN_VALUE);
+    	this.decreaseKey(x, -999999999); // TODO change to min value
     	this.deleteMin();
     }
 
