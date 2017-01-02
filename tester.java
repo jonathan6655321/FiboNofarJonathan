@@ -5,7 +5,7 @@ public class tester {
 	public static void main(String[] args){
 		FibonacciHeap myHeap = new FibonacciHeap();
 		System.out.println(myHeap.empty());
-		System.out.println(myHeap.insert(5));
+		System.out.println(myHeap.insert(5).getKey());
 		System.out.println(myHeap.insert(7).getKey());
 		System.out.println(myHeap.insert(2).getKey());
 		System.out.println(myHeap.findMin().getKey());

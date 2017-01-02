@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 /**
  * FibonacciHeap
  *
@@ -10,7 +11,7 @@ public class FibonacciHeap
 	private HeapNode min; // the min of the heap;
 	private static int totalLinks; // total links made in the heap
 	private static int totalCuts; // total cuts made in the heap
-	private List<HeapNode> roots = new ArrayList<HeapNode>(); // all the roots in the heap
+	private List<HeapNode> roots = new LinkedList<HeapNode>(); // all the roots in the heap
 	private int size; //the number of nodes
 	private int marks; //the number of marked nodes
 	
@@ -171,7 +172,7 @@ public class FibonacciHeap
     */
     public void delete(HeapNode x) 
     {    
-    	this.decreaseKey(x, -999999999);
+    	this.decreaseKey(x, Integer.MIN_VALUE);
     	this.deleteMin();
     }
 
