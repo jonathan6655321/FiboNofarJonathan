@@ -197,6 +197,11 @@ public class FibonacciHeap
     	}
     }
    /**
+    * private void cascadingCut(HeapNode x, HeapNode y) {
+    * the function gets HeapNode x (the one who needs to be cut) and node y, his parent.
+    * its a recrucian function that cuts recursuianly the items in the tree.
+    * first she cuts the node that is invalid, then if the parent node is marked she cuts it also 
+    * and continue to the next parent until the root.
     * 
     */
     
