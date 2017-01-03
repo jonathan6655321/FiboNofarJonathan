@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.AbstractList;
+import java.util.Arrays;
+import java.util.Collections;
 /**
  * FibonacciHeap
  *
@@ -11,7 +14,7 @@ public class FibonacciHeap
 	private HeapNode min; // the min of the heap;
 	private static int totalLinks; // total links made in the heap
 	private static int totalCuts; // total cuts made in the heap
-	private List<HeapNode> roots = new LinkedList<HeapNode>(); // all the roots in the heap
+	private MyList roots = new MyList(); // all the roots in the heap
 	private int size; //the number of nodes
 	private int marks; //the number of marked nodes
 	
@@ -49,11 +52,11 @@ public class FibonacciHeap
     	}
     	
     	else { // sets the prev and next to be the last item and the first items in the roots list
-    		newInsert.setPrev(this.roots.get(this.roots.size()-1));
-    		newInsert.setNext(this.roots.get(0));
+    		newInsert.setPrev(this.roots.getTail());
+    		newInsert.setNext(this.roots.getHead());
     	}
     	this.size ++;
-    	this.roots.add(newInsert);; // add the root to the roots list
+    	this.roots.addLast(newInsert);; // add the root to the roots list
     	
     	if (this.min == null) { //updates the min
     		this.min = newInsert;
@@ -107,10 +110,11 @@ public class FibonacciHeap
     		  }
     		  this.marks = this.marks + heap2.marks;
     		  this.size = this.size + heap2.size;
-    		  this.roots.addAll(heap2.roots); // TODO do in O(1) by switching to linked list
+    		  this.roots.concate(heap2.roots); // TODO do in O(1) by switching to linked list
     	  }
     	  // if both heaps are empty or if heap2 is empty do nothing!
     }
+    
 
    /**
     * public int size()
@@ -129,20 +133,20 @@ public class FibonacciHeap
     * Return a counters array, where the value of the i-th entry is the number of trees of order i in the heap. 
     * 
     */
-    public int[] countersRep() // TODO maybe in O(1) by implementing in array with doubles
-    {
-	int[] arr = new int[0];
-	for (int i = 0;i<this.roots.size();i++) { // go on all the roots of the heap
-		int rank = this.roots.get(i).getRank(); //check the rank of the root
-		if (rank > arr.length-1) { //if the list is shorter then the rank
-			int[] newArr = new int[rank+1]; //copy the array to new longer array
-			System.arraycopy(arr, 0, newArr, 0, arr.length);
-			arr = newArr;
-		}
-		arr[rank] +=1; //counter++ to the relevant rank
-	}
-    return arr;
-    }
+//    public int[] countersRep() // TODO maybe in O(1) by implementing in array with doubles
+//    {
+//	int[] arr = new int[0];
+//	for (int i = 0;i<this.roots.size();i++) { // go on all the roots of the heap
+//		int rank = this.roots.get(i).getRank(); //check the rank of the root
+//		if (rank > arr.length-1) { //if the list is shorter then the rank
+//			int[] newArr = new int[rank+1]; //copy the array to new longer array
+//			System.arraycopy(arr, 0, newArr, 0, arr.length);
+//			arr = newArr;
+//		}
+//		arr[rank] +=1; //counter++ to the relevant rank
+//	}
+//   return arr;
+//    }
 
    /**
     * public void arrayToHeap()
@@ -211,7 +215,7 @@ public class FibonacciHeap
     		x.getNext().setPrev(x.getPrev());
     		y.deleteChild(x);
     	}
-    	this.roots.add(x);
+    	this.roots.addLast(x);
     	if (y.parent!= null) {
     		if (y.getMark() == false) {
     			y.setMark(true);
@@ -259,6 +263,75 @@ public class FibonacciHeap
     {    
     	return totalCuts;
     }
+ 
+    
+    public class MyList {
+    	private HeapNode head;
+    	private HeapNode tail;
+    	private int size;
+    	
+    	public boolean isEmpty()
+        {
+        	if (this.size == 0) {
+        		return true;
+        	}
+        	else {
+        		return false;
+        	}
+        }
+    	public void addLast(HeapNode node) {
+    		if (this.isEmpty()) {
+    			this.head = node;
+    			this.tail = node;
+    		}
+    		else {
+    			HeapNode tmp = this.tail;
+    			this.tail = node;
+    			node.setPrev(tmp);
+    			tmp.setNext(node);
+    			this.size ++;
+    		}
+    	}
+    	public void concate(MyList heap2) {
+    		this.size = this.size + heap2.size;
+    		this.tail.setNext(heap2.head);
+    		this.head.setPrev(heap2.tail);
+    		this.tail = heap2.tail;
+    	}
+    	public void delete(HeapNode node) {
+    		node.getPrev().setNext(node.getNext());
+    		node.getNext().setPrev(node.getPrev());
+    		this.size --;
+    		if (this.isEmpty()) {
+    			this.head = null;
+    			this.tail = null;
+    		}
+    		if (this.tail == node) {
+    			this.tail = node.getPrev();
+    		}
+    		else if (this.head == node) {
+    			this.head = node.getNext();
+    		}
+    	}
+    	public int size() {
+    		return this.size;
+    	}
+    	public HeapNode getTail() {
+    		return this.tail;
+    	}
+    	public HeapNode getHead() {
+    		return this.head;
+    	}
+    	public void clear() {
+    		this.head = null;
+			this.tail = null;
+			this.size = 0;
+    	}
+    	
+    }
+    
+    
+    
     
    /**
     * public class HeapNode
