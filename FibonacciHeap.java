@@ -268,14 +268,18 @@ public class FibonacciHeap
     {    
     	return totalCuts;
     }
- 
+    /**
+     * public class MyList
+     * class of linked list the simple linked list for the roots.
+     * answers the requirements that we need in this project
+     */
     
     public class MyList {
     	private HeapNode head;
     	private HeapNode tail;
     	private int size;
     	
-    	public boolean isEmpty()
+    	public boolean isEmpty() // check if the list is empty
         {
         	if (this.size == 0) {
         		return true;
@@ -284,7 +288,7 @@ public class FibonacciHeap
         		return false;
         	}
         }
-    	public void addLast(HeapNode node) {
+    	public void addLast(HeapNode node) { // adds an object at the end of the list
     		if (this.isEmpty()) {
     			this.head = node;
     			this.tail = node;
@@ -297,13 +301,13 @@ public class FibonacciHeap
     			this.size ++;
     		}
     	}
-    	public void concate(MyList heap2) {
+    	public void concate(MyList heap2) { //concate two linked list lists in o(1)
     		this.size = this.size + heap2.size;
     		this.tail.setNext(heap2.head);
     		this.head.setPrev(heap2.tail);
     		this.tail = heap2.tail;
     	}
-    	public void delete(HeapNode node) {
+    	public void delete(HeapNode node) { //delete an object from the list
     		node.getPrev().setNext(node.getNext());
     		node.getNext().setPrev(node.getPrev());
     		this.size --;
@@ -318,16 +322,16 @@ public class FibonacciHeap
     			this.head = node.getNext();
     		}
     	}
-    	public int size() {
+    	public int size() { //returns the size of the list
     		return this.size;
     	}
-    	public HeapNode getTail() {
+    	public HeapNode getTail() { //returns the tail of the list
     		return this.tail;
     	}
-    	public HeapNode getHead() {
+    	public HeapNode getHead() { // returns the head of the list
     		return this.head;
     	}
-    	public void clear() {
+    	public void clear() { // clears the list
     		this.head = null;
 			this.tail = null;
 			this.size = 0;
