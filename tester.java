@@ -18,7 +18,6 @@ public class tester {
 		myHeap.meld(heap2);
 		System.out.println(myHeap.findMin().getKey());
 		System.out.println(myHeap.size());
-		System.out.println(Arrays.toString(myHeap.countersRep()));
 		int[] arr = {1,2,3,4,5,-1};
 		myHeap.arrayToHeap(arr);
 		System.out.println(myHeap.findMin().getKey());
