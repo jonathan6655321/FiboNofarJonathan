@@ -133,7 +133,7 @@ public class FibonacciHeap
     * Return a counters array, where the value of the i-th entry is the number of trees of order i in the heap. 
     * 
     */
-//    public int[] countersRep() // TODO maybe in O(1) by implementing in array with doubles
+//   public int[] countersRep() // TODO maybe in O(1) by implementing in array with doubles
 //    {
 //	int[] arr = new int[0];
 //	for (int i = 0;i<this.roots.size();i++) { // go on all the roots of the heap
@@ -187,12 +187,12 @@ public class FibonacciHeap
     * The function decreases the key of the node x by delta. The structure of the heap should be updated
     * to reflect this change (for example, the cascading cuts procedure should be applied if needed).
     */
-    public void decreaseKey(HeapNode x, int delta)
+    public void decreaseKey(HeapNode node, int delta)
     {    
-    	x.setKey(delta);
-    	if (x.getParent() != null) {
-    		if (x.getParent().getKey() < x.getKey()) {
-    			cascadingCut(x, x.getParent());
+    	node.setKey(delta);
+    	if (node.getParent() != null) {
+    		if (node.getParent().getKey() < node.getKey()) {
+    			cascadingCut(node, node.getParent());
     		}
     	}
     }
@@ -205,29 +205,29 @@ public class FibonacciHeap
     * 
     */
     
-    private void cascadingCut(HeapNode x, HeapNode y) {
-    	x.setParent(null);
-    	if (x.getMark() == true) {
-    		x.setMark(false);
+    private void cascadingCut(HeapNode node, HeapNode parent) {
+    	node.setParent(null);
+    	if (node.getMark() == true) {
+    		node.setMark(false);
     		this.marks --;
     	}
-    	y.setRank(y.getRank()-1);
-    	if (x.getNext() == x) {
-    		y.deleteChild(x);
+    	parent.setRank(parent.getRank()-1);
+    	if (node.getNext() == node) {
+    		parent.deleteChild(node);
     	}
     	else {
-    		x.getPrev().setNext(x.getNext());
-    		x.getNext().setPrev(x.getPrev());
-    		y.deleteChild(x);
+    		node.getPrev().setNext(node.getNext());
+    		node.getNext().setPrev(node.getPrev());
+    		parent.deleteChild(node);
     	}
-    	this.roots.addLast(x);
-    	if (y.parent!= null) {
-    		if (y.getMark() == false) {
-    			y.setMark(true);
+    	this.roots.addLast(node);
+    	if (parent.parent!= null) {
+    		if (parent.getMark() == false) {
+    			parent.setMark(true);
     			this.marks ++;
     		}
     		else {
-    			cascadingCut(y,y.getParent());
+    			cascadingCut(parent,parent.getParent());
     		}
     	}
     	
@@ -271,7 +271,7 @@ public class FibonacciHeap
     /**
      * public class MyList
      * class of linked list the simple linked list for the roots.
-     * answers the requirements that we need in this project
+     * answers the requirements that we need in this project for the list of roots.
      */
     
     public class MyList {
