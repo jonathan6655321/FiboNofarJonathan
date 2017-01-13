@@ -56,7 +56,7 @@ public class FibonacciHeap
     		newInsert.setNext(this.roots.getHead());
     	}
     	this.size ++;
-    	this.roots.addLast(newInsert);; // add the root to the roots list
+    	this.roots.addLast(newInsert); // add the root to the roots list
     	
     	if (this.min == null) { //updates the min
     		this.min = newInsert;
@@ -133,20 +133,30 @@ public class FibonacciHeap
     * Return a counters array, where the value of the i-th entry is the number of trees of order i in the heap. 
     * 
     */
-//   public int[] countersRep() // TODO maybe in O(1) by implementing in array with doubles
-//    {
-//	int[] arr = new int[0];
-//	for (int i = 0;i<this.roots.size();i++) { // go on all the roots of the heap
-//		int rank = this.roots.get(i).getRank(); //check the rank of the root
-//		if (rank > arr.length-1) { //if the list is shorter then the rank
-//			int[] newArr = new int[rank+1]; //copy the array to new longer array
-//			System.arraycopy(arr, 0, newArr, 0, arr.length);
-//			arr = newArr;
-//		}
-//		arr[rank] +=1; //counter++ to the relevant rank
-//	}
-//   return arr;
-//    }
+   public int[] countersRep() 
+    {
+	int[] arr = new int[0];
+	HeapNode current = this.roots.getHead();
+	boolean flag = true;
+	while (flag) { // go on all the roots of the heap
+		int rank = current.getRank(); //check the rank of the root
+		if (rank > arr.length-1) { //if the list is shorter then the rank
+			int[] newArr = new int[rank+1]; //copy the array to new longer array
+			System.arraycopy(arr, 0, newArr, 0, arr.length);
+			arr = newArr;
+		}
+		arr[rank] +=1; //counter++ to the relevant rank
+		if (current != this.roots.getTail()) {
+			current = current.getNext();
+		}
+		else {
+			flag = false;
+		}
+		
+		
+	}
+   return arr;
+    }
 
    /**
     * public void arrayToHeap()
@@ -292,6 +302,7 @@ public class FibonacciHeap
     		if (this.isEmpty()) {
     			this.head = node;
     			this.tail = node;
+    			this.size ++;
     		}
     		else {
     			HeapNode tmp = this.tail;
