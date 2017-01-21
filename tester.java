@@ -49,11 +49,37 @@ public class tester {
 		myHeap.deleteMin();
 		System.out.println(Arrays.toString(myHeap.countersRep()));
 		System.out.println(myHeap.size());
-//		for (int i =3000 ; i>=0;i--) {
-//			myHeap.insert(i);
-//		}
-//		System.out.println(Arrays.toString(myHeap.countersRep()));
-//		myHeap.deleteMin();
-//		System.out.println(Arrays.toString(myHeap.countersRep()));
+		//mesures need to add run time function
+		FibonacciHeap heap1000 = new FibonacciHeap();
+		for (int i =1000 ; i>=0;i--) {
+			heap1000.insert(i);
+		}
+		System.out.println("Insertation1000:\ntotalLinks = "+heap1000.totalLinks()+"\ntotalCuts = "+heap1000.totalCuts()+"\nPotential = "+heap1000.potential());
+		for (int l = 0; l<1000/2;l++) {
+			heap1000.deleteMin();
+		}
+		System.out.println("Deletion1000/2\ntotalLinks = "+heap1000.totalLinks()+"\ntotalCuts = "+heap1000.totalCuts()+"\nPotential = "+heap1000.potential());
+		
+		FibonacciHeap heap2000 = new FibonacciHeap();
+		for (int i =2000 ; i>=0;i--) {
+			heap2000.insert(i);
+		}
+		System.out.println("Insertation2000:\ntotalLinks = "+heap2000.totalLinks()+"\ntotalCuts = "+heap2000.totalCuts()+"\nPotential = "+heap2000.potential());
+		for (int l = 0; l<2000/2;l++) {
+			heap2000.deleteMin();
+		}
+		System.out.println("Deletion2000/2\ntotalLinks = "+heap2000.totalLinks()+"\ntotalCuts = "+heap2000.totalCuts()+"\nPotential = "+heap2000.potential());
+		
+		FibonacciHeap heap3000 = new FibonacciHeap();
+		for (int i =3000 ; i>=0;i--) {
+			heap3000.insert(i);
+		}
+		System.out.println("Insertation3000:\ntotalLinks = "+heap3000.totalLinks()+"\ntotalCuts = "+heap3000.totalCuts()+"\nPotential = "+heap3000.potential());
+		for (int l = 0; l<3000/2;l++) {
+			heap3000.deleteMin();
+		}
+		System.out.println("Deletion3000/2\ntotalLinks = "+heap3000.totalLinks()+"\ntotalCuts = "+heap3000.totalCuts()+"\nPotential = "+heap3000.potential());
+		
+		
 	}
 }

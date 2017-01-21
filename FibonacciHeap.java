@@ -150,7 +150,7 @@ public class FibonacciHeap
     			B[currentNode.getRank() - 1] = null;
     		}
     		B[currentNode.getRank()] = currentNode;
-    		System.out.println(Arrays.toString(B));
+//    		System.out.println(Arrays.toString(B));
     		
     	}
     	return B;
