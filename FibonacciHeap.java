@@ -483,10 +483,11 @@ public class FibonacciHeap
 			this.size = 0;
     	}
     	
+    	
     }
     
-    
-    
+   
+
     
    /**
     * public class HeapNode

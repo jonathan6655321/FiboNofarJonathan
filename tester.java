@@ -30,5 +30,30 @@ public class tester {
 		System.out.println(myHeap.totalCuts());
 		System.out.println(myHeap.totalLinks());
 		System.out.println(Arrays.toString(myHeap.countersRep()));
+		myHeap.deleteMin();
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		System.out.println(myHeap.insert(-1).getKey());
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		System.out.println(myHeap.insert(-2).getKey());
+		System.out.println(myHeap.insert(5).getKey());
+		myHeap.deleteMin();
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		myHeap.delete(myHeap.findMin());
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		FibonacciHeap.HeapNode myNode = myHeap.insert(1000);
+		myHeap.deleteMin();
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		myHeap.decreaseKey(myNode,-1);
+		System.out.println(myHeap.size());
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		myHeap.deleteMin();
+		System.out.println(Arrays.toString(myHeap.countersRep()));
+		System.out.println(myHeap.size());
+//		for (int i =3000 ; i>=0;i--) {
+//			myHeap.insert(i);
+//		}
+//		System.out.println(Arrays.toString(myHeap.countersRep()));
+//		myHeap.deleteMin();
+//		System.out.println(Arrays.toString(myHeap.countersRep()));
 	}
 }
