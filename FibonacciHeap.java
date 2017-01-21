@@ -110,6 +110,8 @@ public class FibonacciHeap
     	List <HeapNode> minChildsList = min.childs;
     	MyList minChilds = new MyList();
     	
+    	
+    	// TODO update markers? ? ? ? 
     	for (HeapNode n: minChildsList){
     		n.parent = null; 
     		minChilds.addLast(n);
