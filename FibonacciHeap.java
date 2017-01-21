@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.AbstractList;
@@ -14,10 +15,12 @@ public class FibonacciHeap
 	private HeapNode min; // the min of the heap;
 	private static int totalLinks; // total links made in the heap
 	private static int totalCuts; // total cuts made in the heap
-	private MyList roots = new MyList(); // all the roots in the heap
+	public MyList roots = new MyList(); // all the roots in the heap TODO change to private
 	private int size; //the number of nodes
 	private int marks; //the number of marked nodes
 	
+	
+	private static final double GOLDEN_RATIO = 1.61803398875;
    /**
     * public boolean empty()
     *
@@ -58,14 +61,24 @@ public class FibonacciHeap
     	this.size ++;
     	this.roots.addLast(newInsert); // add the root to the roots list
     	
-    	if (this.min == null) { //updates the min
-    		this.min = newInsert;
-    	}
-    	else if (this.min.getKey() > key) {
-    		this.min = newInsert;
-    	}
+    	
+    	this.updateMin(newInsert);
+    	
+    	
       	return newInsert; //returns the new node
     }
+    
+    
+    
+    private void updateMin(HeapNode insertedNode){
+    	if (this.min == null) { //updates the min
+    		this.min = insertedNode;
+    	}
+    	else if (this.min.getKey() > insertedNode.getKey()) {
+    		this.min = insertedNode;
+    	}
+    }
+    
 
    /**
     * public void deleteMin()
@@ -75,10 +88,114 @@ public class FibonacciHeap
     */
     public void deleteMin()
     {
-     	return; // should be replaced by student code
-     	
+    	
+    	MyList minChilds = this.removeMin();
+    	this.roots.concate(minChilds);
+    	this.consolidate();
+    	this.size--;
+    	
+     	return; 
     }
+    
+    
+    /*
+     * removes the minimum element from heap - root list and min pointer. 
+     * returns MyList of the min childs with parent set to null.
+     */
+    private MyList removeMin(){
+    	HeapNode min = this.findMin();
+    	this.setMin(null);
+    	this.roots.delete(min);
+    	
+    	List <HeapNode> minChildsList = min.childs;
+    	MyList minChilds = new MyList();
+    	
+    	for (HeapNode n: minChildsList){
+    		n.parent = null; 
+    		minChilds.addLast(n);
+    	}
+    	return minChilds;
+    }
+    
+    
+    /*
+     * Consolidates. 
+     */
+    private void consolidate(){
+    	HeapNode[] buckets = this.toBuckets();
+    	this.fromBuckets(buckets);
+    }
+    
+    
+    private HeapNode[] toBuckets(){
+    	// calculates log this.size with base Golden Ratio. 
+    	// TODO maybe take a bigger number for safety?
+    	int bSize =  (int) (Math.round((Math.log(this.size()))/(Math.log(GOLDEN_RATIO)))) + 1;
+//    	int bSize = this.size();
+    	HeapNode[] B = new HeapNode[bSize];
 
+    	
+    	
+    	HeapNode currentNode = this.roots.getHead();
+    	HeapNode nextNode = this.roots.getHead();
+    	
+    	while (nextNode != null){
+    		currentNode = nextNode;
+    		nextNode = nextNode.getNext();
+//    		System.out.println(currentNode.getRank() + " is nodes rank before consolidated\n" + bSize + " is the array size"); 
+    		while (B[currentNode.getRank()] != null){
+    			currentNode = link(currentNode, B[currentNode.getRank()]);
+    			B[currentNode.getRank() - 1] = null;
+    		}
+    		B[currentNode.getRank()] = currentNode;
+    		System.out.println(Arrays.toString(B));
+    		
+    	}
+    	return B;
+    }
+    
+   
+    
+    
+    private static HeapNode link(HeapNode node1, HeapNode node2){
+    	// node1 will be the one with smaller key:
+    	if (node1.getKey() > node2.getKey()){
+    		HeapNode temp = node1;
+    		node1 = node2;
+    		node2 = temp;
+    	}
+    	
+//    	TODO do I need the next and prev for nodes in children lists?
+
+    	
+    	node1.addChild(node2);
+    	node2.setParent(node1);
+    	node2.clearNextAndPrev();
+    	
+    	node1.setRank(node1.getRank() + 1);
+    	
+    	totalLinks++;
+    	
+    	return node1;
+    	
+    }
+    
+    
+    private void fromBuckets(HeapNode[] buckets){
+    	MyList newRoots = new MyList();
+    	for(HeapNode n: buckets){
+    		if (n == null){
+    			continue;
+    		}
+    		n.clearNextAndPrev();
+    		newRoots.addLast(n);
+    		updateMin(n);
+    	}
+    	
+    	this.roots = newRoots;
+    }
+    
+    
    /**
     * public HeapNode findMin()
     *
@@ -89,6 +206,10 @@ public class FibonacciHeap
     {
     	return this.min;
     } 
+    
+    private void setMin(HeapNode newMin) {
+    	this.min = newMin;
+    }
     
    /**
     * public void meld (FibonacciHeap heap2)
@@ -314,18 +435,30 @@ public class FibonacciHeap
     	}
     	public void concate(MyList heap2) { //concate two linked list lists in o(1)
     		this.size = this.size + heap2.size;
-    		this.tail.setNext(heap2.head);
-    		this.head.setPrev(heap2.tail);
+    		if (this.tail != null){
+    			this.tail.setNext(heap2.head); // TODO there were changes here
+//    			this.head.setPrev(heap2.tail);
+    			if (heap2.head != null){
+    				heap2.head.setPrev(this.tail);    				
+    			}
+    		} else {
+    			this.head = heap2.head;
+    		}
     		this.tail = heap2.tail;
     	}
     	public void delete(HeapNode node) { //delete an object from the list
-    		node.getPrev().setNext(node.getNext());
-    		node.getNext().setPrev(node.getPrev());
+    		
+    		if (node.getPrev() != null){
+    			node.getPrev().setNext(node.getNext());    			
+    		}
+    		if (node.getNext() != null){
+    			node.getNext().setPrev(node.getPrev());    			
+    		}
     		this.size --;
     		if (this.isEmpty()) {
     			this.head = null;
     			this.tail = null;
-    		}
+    		} 
     		if (this.tail == node) {
     			this.tail = node.getPrev();
     		}
@@ -366,7 +499,7 @@ public class FibonacciHeap
     	private int key;
     	private int rank;
     	private boolean mark = false;
-    	private List<HeapNode> childs = new ArrayList<HeapNode>();
+    	private LinkedList<HeapNode> childs = new LinkedList<HeapNode>();
     	private HeapNode next;
     	private HeapNode prev;
     	private HeapNode parent;
@@ -406,7 +539,7 @@ public class FibonacciHeap
     		this.mark = mark;
     	}
     	public void addChild(HeapNode child) {
-    		this.childs.add(child);
+    		this.childs.addFirst(child);
     	}
     	public void deleteChild(HeapNode child) {
     		this.childs.remove(child);
@@ -419,6 +552,16 @@ public class FibonacciHeap
     	}
     	public void setParent(HeapNode parent) {
     		this.parent = parent;
+    	}
+    	
+    	public String toString(){
+    		return "" +  this.getRank();
+    	}
+    	
+    	private void clearNextAndPrev(){
+    		this.next = null;
+    		this.prev = null;
+    		
     	}
 
     }
