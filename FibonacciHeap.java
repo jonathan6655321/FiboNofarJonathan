@@ -1,4 +1,4 @@
-package myfibo;
+//package myfibo;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -311,8 +311,8 @@ public class FibonacciHeap
     */
     public void delete(HeapNode x) 
     {    
-//    	this.decreaseKey(x, Integer.MIN_VALUE);
-    	this.decreaseKey(x, this.min.getKey()-100); // TODO change to min value
+    	this.decreaseKey(x, Integer.MIN_VALUE);
+//    	this.decreaseKey(x, this.min.getKey()-100); // TODO change to min value
     	this.deleteMin();
     }
 
@@ -330,7 +330,7 @@ public class FibonacciHeap
     		this.min = node;
     	}
     	if (node.getParent() != null) {
-    		if (node.getParent().getKey() < node.getKey()) {
+    		if (node.getParent().getKey() > node.getKey()) {
     			cascadingCut(node, node.getParent());
     		}
     	}
@@ -477,7 +477,7 @@ public class FibonacciHeap
     		if (this.tail == node) {
     			this.tail = node.getPrev();
     		}
-    		else if (this.head == node) {
+    		if (this.head == node) { // TODO removed else here..
     			this.head = node.getNext();
     		}
     	}
