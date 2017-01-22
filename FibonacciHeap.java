@@ -349,7 +349,8 @@ public class FibonacciHeap
     		parent.deleteChild(node);
     	}
     	else {
-    		if (node.getPrev() != null){ // TODO I just patched these.. check them
+    		if (node.getPrev() != null){ // TODO I just patched these.. check them. there was no ifs. 
+    			// but is the null case covered in the logic in general? 
     			node.getPrev().setNext(node.getNext());    			
     		}
     		if (node.getNext() != null){ // TODO I just patched these.. check them
