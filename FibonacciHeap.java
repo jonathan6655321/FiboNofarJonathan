@@ -13,8 +13,8 @@ import java.util.Collections;
 public class FibonacciHeap
 {
 	private HeapNode min; // the min of the heap;
-	private static int totalLinks; // total links made in the heap
-	private static int totalCuts; // total cuts made in the heap
+	public static int totalLinks; // total links made in the heap TODO private
+	public static int totalCuts; // total cuts made in the heap TODO private
 	public MyList roots = new MyList(); // all the roots in the heap TODO change to private
 	private int size; //the number of nodes
 	private int marks; //the number of marked nodes
@@ -322,7 +322,7 @@ public class FibonacciHeap
     */
     public void decreaseKey(HeapNode node, int delta)
     {    
-    	node.setKey(delta);
+    	node.setKey( node.getKey() - delta); // TODO was setKey(delta)
     	if (node.getParent() != null) {
     		if (node.getParent().getKey() < node.getKey()) {
     			cascadingCut(node, node.getParent());
@@ -349,8 +349,12 @@ public class FibonacciHeap
     		parent.deleteChild(node);
     	}
     	else {
-    		node.getPrev().setNext(node.getNext());
-    		node.getNext().setPrev(node.getPrev());
+    		if (node.getPrev() != null){ // TODO I just patched these.. check them
+    			node.getPrev().setNext(node.getNext());    			
+    		}
+    		if (node.getNext() != null){ // TODO I just patched these.. check them
+    			node.getNext().setPrev(node.getPrev());    			
+    		}
     		parent.deleteChild(node);
     	}
     	this.roots.addLast(node);
@@ -499,12 +503,12 @@ public class FibonacciHeap
     */
     public class HeapNode{
     	
-    	private int key;
+    	public int key; // TODO private
     	private int rank;
-    	private boolean mark = false;
+    	public boolean mark = false; // TODO private
     	private LinkedList<HeapNode> childs = new LinkedList<HeapNode>();
-    	private HeapNode next;
-    	private HeapNode prev;
+    	public HeapNode next; // TODO private 
+    	public HeapNode prev; // TODO private
     	private HeapNode parent;
     	
     	public HeapNode(int key) {
@@ -557,9 +561,9 @@ public class FibonacciHeap
     		this.parent = parent;
     	}
     	
-    	public String toString(){
-    		return "" +  this.getRank();
-    	}
+//    	public String toString(){ // TODO remove this function
+//    		return "nodes rank is" +  this.getRank();
+//    	}
     	
     	private void clearNextAndPrev(){
     		this.next = null;
