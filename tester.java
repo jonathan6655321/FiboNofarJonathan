@@ -1,3 +1,5 @@
+package myfibo;
+
 import java.util.Arrays;
 
 public class tester {

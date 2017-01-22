@@ -1,33 +1,34 @@
+package myfibo;
+
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import FibonacciHeap.HeapNode;
 
 
 public class TesterFromAnonymous {
 	
 	public static void main(String[] args){
-		FibonacciHeap h1 = new FibonacciHeap();
-		h1.insert(13);
-		h1.insert(2);	
-		h1.insert(4);
-		h1.insert(3);	
-		h1.insert(8);
-		h1.insert(9);
-		FibonacciHeap.HeapNode n2= h1.insert(7);
-		FibonacciHeap.HeapNode n3= h1.insert(12);
-		FibonacciHeap.HeapNode n4= h1.insert(6);
-		FibonacciHeap.HeapNode n1= h1.insert(5);
-		h1.insert(10);
-		h1.insert(11);
-    	h1.insert(1);
-    	h1.deleteMin();
-    	h1.delete(n4);
-    	h1.delete(n2);
-    	h1.delete(n3);
-    	stressTest(50,100);
-    	meldTest(100);
+//		FibonacciHeap h1 = new FibonacciHeap();
+//		h1.insert(13);
+//		h1.insert(2);	
+//		h1.insert(4);
+//		h1.insert(3);	
+//		h1.insert(8);
+//		h1.insert(9);
+//		FibonacciHeap.HeapNode n2= h1.insert(7);
+//		FibonacciHeap.HeapNode n3= h1.insert(12);
+//		FibonacciHeap.HeapNode n4= h1.insert(6);
+//		FibonacciHeap.HeapNode n1= h1.insert(5);
+//		h1.insert(10);
+//		h1.insert(11);
+//    	h1.insert(1);
+//    	h1.deleteMin();
+//    	h1.delete(n4);
+//    	h1.delete(n2);
+//    	h1.delete(n3);
+//    	stressTest(50,100);
+//    	meldTest(100);
       	insertDeleteTest(50);
 		
 
