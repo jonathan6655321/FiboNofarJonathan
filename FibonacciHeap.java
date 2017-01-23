@@ -522,53 +522,53 @@ public class FibonacciHeap
     	public HeapNode prev; // TODO private
     	private HeapNode parent;
     	
-    	public HeapNode(int key) {
+    	public HeapNode(int key) { //builder for a HeapNode (set the key to be the argument
     		this.key = key;
     	}
-    	public int getKey() {
+    	public int getKey() { // getter for the field key
     		return this.key;
     	}
-    	public int getRank() {
+    	public int getRank() { // getter for the field rank
     		return this.rank;
     	}
-    	public boolean getMark() {
+    	public boolean getMark() {// getter for the field mark
     		return this.mark;
     	}
-    	public LinkedList<HeapNode> getChilds() {
+    	public LinkedList<HeapNode> getChilds() {// getter for the field childs
     		return this.childs;
     	}
-    	public HeapNode getNext() {
+    	public HeapNode getNext() { // // getter for the field next
     		return this.next;
     	}
-    	public HeapNode getPrev() {
+    	public HeapNode getPrev() {// getter for the field prev
     		return this.prev;
     	}
-    	public HeapNode getParent() {
+    	public HeapNode getParent() {// getter for the field parent
     		return this.parent;
     	}
     	
-    	public void setKey(int key) {
+    	public void setKey(int key) {// setter for the field key
     		this.key = key;
     	}
-    	public void setRank(int rank) {
+    	public void setRank(int rank) {// setter for the field rank
     		this.rank = rank;
     	}
-    	public void setMark(boolean mark) {
+    	public void setMark(boolean mark) {// setter for the field mark
     		this.mark = mark;
     	}
-    	public void addChild(HeapNode child) {
+    	public void addChild(HeapNode child) {// adds new child to the heap node childs list
     		this.childs.addFirst(child);
     	}
-    	public void deleteChild(HeapNode child) {
+    	public void deleteChild(HeapNode child) { // deletes a child from the heap node childs list
     		this.childs.remove(child);
     	}
-    	public void setNext(HeapNode next) {
+    	public void setNext(HeapNode next) { // setter for the field next
     		this.next = next;
     	}
-    	public void setPrev(HeapNode prev) {
+    	public void setPrev(HeapNode prev) {// setter for the field prev
     		this.prev = prev;
     	}
-    	public void setParent(HeapNode parent) {
+    	public void setParent(HeapNode parent) {// setter for the field parent
     		this.parent = parent;
     	}
     	
