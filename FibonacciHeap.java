@@ -1,4 +1,4 @@
-//package myfibo;
+package myfibo;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -345,6 +345,7 @@ public class FibonacciHeap
     */
     
     private void cascadingCut(HeapNode node, HeapNode parent) {
+    	totalCuts++;
     	node.setParent(null);
     	
     	if (node.getMark() == true) {
@@ -366,6 +367,7 @@ public class FibonacciHeap
     		parent.deleteChild(node);
     	}
     	this.roots.addLast(node);
+    	
     	if (parent.parent!= null) {
     		if (parent.getMark() == false) {
     			parent.setMark(true);
@@ -532,7 +534,7 @@ public class FibonacciHeap
     	public boolean getMark() {
     		return this.mark;
     	}
-    	public List<HeapNode> getChilds() {
+    	public LinkedList<HeapNode> getChilds() {
     		return this.childs;
     	}
     	public HeapNode getNext() {
