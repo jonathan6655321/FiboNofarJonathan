@@ -1,4 +1,4 @@
-package myfibo;
+//package myfibo;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -10,14 +10,16 @@ import java.util.Collections;
 /**
  * FibonacciHeap
  *
+ * nufarlevy  203432372   , somer  307923383
+ *
  * An implementation of fibonacci heap over non-negative integers.
  */
 public class FibonacciHeap
 {
 	private HeapNode min; // the min of the heap;
-	public static int totalLinks; // total links made in the heap TODO private
-	public static int totalCuts; // total cuts made in the heap TODO private
-	public MyList roots = new MyList(); // all the roots in the heap TODO change to private
+	private static int totalLinks; // total links made in the heap  
+	private static int totalCuts; // total cuts made in the heap 
+	private MyList roots = new MyList(); // all the roots in the heap 
 	private int size; //the number of nodes
 	private int marks; //the number of marked nodes
 	
@@ -70,8 +72,9 @@ public class FibonacciHeap
       	return newInsert; //returns the new node
     }
     
-    
-    
+    /*
+     * handles min update in inserts.
+     */
     private void updateMin(HeapNode insertedNode){
     	if (this.min == null) { //updates the min
     		this.min = insertedNode;
@@ -112,8 +115,6 @@ public class FibonacciHeap
     	List <HeapNode> minChildsList = min.childs;
     	MyList minChilds = new MyList();
     	
-    	
-    	// TODO update markers? ? ? ? 
     	for (HeapNode n: minChildsList){
     		n.parent = null; 
     		minChilds.addLast(n);
@@ -131,9 +132,11 @@ public class FibonacciHeap
     }
     
     
+    /*
+     * follows algorithm from class.
+     */
     private HeapNode[] toBuckets(){
     	// calculates log this.size with base Golden Ratio. 
-    	// TODO maybe take a bigger number for safety?
     	int bSize =  (int) (Math.round((Math.log(this.size()))/(Math.log(GOLDEN_RATIO)))) + 1;
 //    	int bSize = this.size();
     	HeapNode[] B = new HeapNode[bSize];
@@ -159,8 +162,9 @@ public class FibonacciHeap
     }
     
    
-    
-    
+    /*
+     * follows link logic from class.
+     */
     private static HeapNode link(HeapNode node1, HeapNode node2){
     	// node1 will be the one with smaller key:
     	if (node1.getKey() > node2.getKey()){
@@ -168,9 +172,6 @@ public class FibonacciHeap
     		node1 = node2;
     		node2 = temp;
     	}
-    	
-//    	TODO do I need the next and prev for nodes in children lists?
-
     	
     	node1.addChild(node2);
     	node2.setParent(node1);
@@ -184,7 +185,9 @@ public class FibonacciHeap
     	
     }
     
-    
+    /*
+     * follows algorithm from class.
+     */
     private void fromBuckets(HeapNode[] buckets){
     	MyList newRoots = new MyList();
     	for(HeapNode n: buckets){
@@ -210,7 +213,9 @@ public class FibonacciHeap
     {
     	return this.min;
     } 
-    
+    /*
+     * sets the min to given heapnode.
+     */
     private void setMin(HeapNode newMin) {
     	this.min = newMin;
     }
@@ -235,7 +240,7 @@ public class FibonacciHeap
     		  }
     		  this.marks = this.marks + heap2.marks;
     		  this.size = this.size + heap2.size;
-    		  this.roots.concate(heap2.roots); // TODO do in O(1) by switching to linked list
+    		  this.roots.concate(heap2.roots);
     	  }
     	  // if both heaps are empty or if heap2 is empty do nothing!
     }
@@ -292,8 +297,8 @@ public class FibonacciHeap
     public void arrayToHeap(int[] array)
     {
         this.min = null; // we will clear the heap first
-    	this.totalLinks = 0;
-    	this.totalCuts = 0;
+    	totalLinks = 0;
+    	totalCuts = 0;
     	this.roots.clear();
     	this.size = 0;
     	this.marks = 0;
@@ -312,7 +317,6 @@ public class FibonacciHeap
     public void delete(HeapNode x) 
     {    
     	this.decreaseKey(x, Integer.MIN_VALUE);
-//    	this.decreaseKey(x, this.min.getKey()-100); // TODO change to min value
     	this.deleteMin();
     }
 
@@ -325,7 +329,7 @@ public class FibonacciHeap
     public void decreaseKey(HeapNode node, int delta)
     {    
     	
-    	node.setKey( node.getKey() - delta); // TODO was setKey(delta)
+    	node.setKey( node.getKey() - delta); 
     	if (this.min.getKey() > node.getKey()) {
     		this.min = node;
     	}
@@ -357,11 +361,10 @@ public class FibonacciHeap
     		parent.deleteChild(node);
     	}
     	else {
-    		if (node.getPrev() != null){ // TODO I just patched these.. check them. there was no ifs. 
-    			// but is the null case covered in the logic in general? 
+    		if (node.getPrev() != null){
     			node.getPrev().setNext(node.getNext());    			
     		}
-    		if (node.getNext() != null){ // TODO I just patched these.. check them
+    		if (node.getNext() != null){ 
     			node.getNext().setPrev(node.getPrev());    			
     		}
     		parent.deleteChild(node);
@@ -453,8 +456,7 @@ public class FibonacciHeap
     	public void concate(MyList heap2) { //concate two linked list lists in o(1)
     		this.size = this.size + heap2.size;
     		if (this.tail != null){
-    			this.tail.setNext(heap2.head); // TODO there were changes here
-//    			this.head.setPrev(heap2.tail);
+    			this.tail.setNext(heap2.head); 
     			if (heap2.head != null){
     				heap2.head.setPrev(this.tail);    				
     			}
@@ -479,7 +481,7 @@ public class FibonacciHeap
     		if (this.tail == node) {
     			this.tail = node.getPrev();
     		}
-    		if (this.head == node) { // TODO removed else here..
+    		if (this.head == node) { 
     			this.head = node.getNext();
     		}
     	}
@@ -514,17 +516,19 @@ public class FibonacciHeap
     */
     public class HeapNode{
     	
-    	public int key; // TODO private
+    	public int key; // public on purpose
     	private int rank;
-    	public boolean mark = false; // TODO private
+    	private boolean mark = false; 
     	private LinkedList<HeapNode> childs = new LinkedList<HeapNode>();
-    	public HeapNode next; // TODO private 
-    	public HeapNode prev; // TODO private
+    	private HeapNode next; 
+    	private HeapNode prev; 
     	private HeapNode parent;
     	
     	public HeapNode(int key) { //builder for a HeapNode (set the key to be the argument
     		this.key = key;
     	}
+    	
+    	// as required:
     	public int getKey() { // getter for the field key
     		return this.key;
     	}
@@ -571,10 +575,6 @@ public class FibonacciHeap
     	public void setParent(HeapNode parent) {// setter for the field parent
     		this.parent = parent;
     	}
-    	
-//    	public String toString(){ // TODO remove this function
-//    		return "nodes rank is" +  this.getRank();
-//    	}
     	
     	private void clearNextAndPrev(){
     		this.next = null;
