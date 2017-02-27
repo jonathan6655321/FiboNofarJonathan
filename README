@@ -2,3 +2,6 @@ This is an implementation of a Fibonacci Heap by Nofar Levy and Jonathan Somer
 
 This Implementation was done as an undergraduate project in the Tel Aviv University Computer Science department.
 The project received an A+
+
+
+FibonacciHeap.java includes the implementation
